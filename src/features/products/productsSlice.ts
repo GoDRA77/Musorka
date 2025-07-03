@@ -1,44 +1,44 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type {Product} from '../../types/product';
-import { products as initialProducts } from '../../mocks/products';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { Product } from '../../types/product';
 
 interface ProductsState {
     items: Product[];
-    filteredItems: Product[];
-    categories: string[];
-    selectedCategories: string[];
+    loading: boolean;
+    error: string | null;
 }
 
 const initialState: ProductsState = {
-    items: initialProducts,
-    filteredItems: initialProducts,
-    categories: Array.from(new Set(initialProducts.map(p => p.category))),
-    selectedCategories: [],
+    items: [],
+    loading: false,
+    error: null,
 };
+
+// Thunk для загрузки
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+    const res = await fetch('https://fakestoreapi.com/products');
+    if (!res.ok) throw new Error('Ошибка загрузки товаров');
+    return await res.json();
+});
 
 const productsSlice = createSlice({
     name: 'products',
     initialState,
-    reducers: {
-        toggleCategory(state, action: PayloadAction<string>) {
-            const category = action.payload;
-            if (state.selectedCategories.includes(category)) {
-                state.selectedCategories = state.selectedCategories.filter(c => c !== category);
-            } else {
-                state.selectedCategories.push(category);
-            }
-            // Фильтруем товары
-            if (state.selectedCategories.length === 0) {
-                state.filteredItems = state.items;
-            } else {
-                state.filteredItems = state.items.filter(p =>
-                    state.selectedCategories.includes(p.category)
-                );
-            }
-        },
+    reducers: {},
+    extraReducers: builder => {
+        builder
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.items = action.payload;
+                state.loading = false;
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'Ошибка';
+            });
     },
 });
-
-export const { toggleCategory } = productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -19,5 +19,6 @@ export const products: Product[] = [
         image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879_.jpg",
         rating: { rate: 4.1, count: 259 },
     },
+
     // Добавь остальные товары по необходимости
 ];
