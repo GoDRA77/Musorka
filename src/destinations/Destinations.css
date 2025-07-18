@@ -1,0 +1,85 @@
+
+.little-text {
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #5e6282;
+    margin-bottom: 10px;
+}
+
+.big-text {
+    font-family: Volkhov, serif;
+    font-weight: 700;
+    font-size: 50px;
+    color: #14183e;
+    margin-bottom: 40px;
+    text-transform: capitalize;
+}
+.destination-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.destination-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.destination-card {
+    width: 290px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+}
+
+.destination-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.destination-info {
+    padding: 20px;
+    text-align: left;
+}
+
+.destination-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.destination-header .title {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    color: #14183e;
+}
+
+.destination-header .price {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    color: #5e6282;
+}
+
+.trip-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #5e6282;
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+}
+
+.flight-icon {
+    width: 16px;
+    height: 16px;
+}

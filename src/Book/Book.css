@@ -1,0 +1,188 @@
+.trip-steps-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around ;
+    gap: 50px;
+    padding: 64px 32px;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .trip-steps-container {
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+.text-part {
+    max-width: 400px;
+}
+
+.easy-fast-text {
+    color: #6B7280;
+    font-weight: 500;
+    margin: 0;
+}
+
+.title-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #111827;
+    margin-top: 8px;
+    margin-bottom: 32px;
+}
+
+.steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.step-icon {
+    padding: 12px;
+    background-color: #F3F4F6;
+    border-radius: 50%;
+}
+
+.custom-icon-yellow {
+    color: #F59E0B;
+    font-size: 20px;
+}
+
+.custom-icon-red {
+    color: #EF4444;
+    font-size: 20px;
+}
+
+.custom-icon-cyan {
+    color: #164E63;
+    font-size: 20px;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.step-description {
+    font-size: 14px;
+    color: #4B5563;
+    margin: 4px 0 0;
+}
+
+.card-part {
+    position: relative;
+}
+
+.main-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 176px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-subtitle {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 4px;
+}
+
+.card-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.card-icon {
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.card-people {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.people-text {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.floating-card {
+    position: absolute;
+    bottom: -32px;
+    right: -32px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 208px;
+}
+
+.floating-card-status {
+    font-size: 10px;
+    color: #9CA3AF;
+    margin: 0;
+}
+
+.floating-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.floating-card-progress-text {
+    font-size: 12px;
+    color: #9333EA;
+}
+
+.floating-card-progress-bar {
+    width: 100%;
+    background-color: #E5E7EB;
+    border-radius: 8px;
+    height: 8px;
+    margin-top: 8px;
+}
+
+.floating-card-progress-fill {
+    height: 100%;
+    width: 40%;
+    background-color: #9333EA;
+    border-radius: 8px;
+}

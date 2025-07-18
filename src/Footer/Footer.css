@@ -1,0 +1,144 @@
+.footer-container {
+    background: white;
+    padding: 40px 32px;
+    color: #2d3748;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 150px;
+}
+
+.footer-logo {
+    color: #2d3748;
+    margin: 0 0 10px 0;
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 44px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+}
+
+.footer-tagline {
+    font-size: 14px;
+    color: #718096;
+    margin: 0;
+    max-width: 200px;
+    font-family: Poppins;
+    font-weight: 400;
+    leading-trim: NONE;
+    line-height: 125%;
+    letter-spacing: 0%;
+
+}
+
+.footer-section-title {
+    margin: 0 0 10px 0;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 21px;
+    leading-trim: NONE;
+    line-height: 125%;
+    letter-spacing: 0%;
+
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 125%;
+    letter-spacing: 0%;
+    color: #2d3748;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #718096;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #2d3748;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.social-icon {
+    width: 75px;
+    height: 75px;
+
+}
+
+.footer-apps {
+    display: flex;
+    gap: 10px;
+}
+
+.app-icon {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+}
+
+.footer-discover {
+    color: #2d3748;
+    margin-top: 10px;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20px;
+    leading-trim: NONE;
+    line-height: 125%;
+    letter-spacing: 0.5%;
+
+}
+
+.footer-copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #718096;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 20px;
+}
+
+.footer-container::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 10% 10%, 30% 30%, 50% 50%;
+    z-index: 0;
+}
