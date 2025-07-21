@@ -4,15 +4,33 @@
     align-items: center;
     padding: 20px 40px;
     background: #fff;
+    position: relative;
 }
-.logo img {
-    width: 60px; /* Adjust based on design */
+
+.logo {
+    width: 60px;
 }
+
+/* Бургер-меню */
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+.burger span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    transition: all 0.3s ease;
+}
+
 .navButtons nav {
     display: flex;
     align-items: center;
     gap: 20px;
 }
+
 nav ul {
     list-style: none;
     display: flex;
@@ -20,14 +38,17 @@ nav ul {
     margin: 0;
     padding: 0;
 }
+
 nav ul li a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
 }
+
 nav ul li a:hover {
-    color: #DF6951; /* Match design accent color */
+    color: #DF6951;
 }
+
 nav button {
     padding: 8px 16px;
     border: 1px solid #ccc;
@@ -36,11 +57,77 @@ nav button {
     color: #333;
     cursor: pointer;
 }
+
 nav button:hover {
     background: #f5f5f5;
 }
+
 .lang-select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+/* Группируем кнопки и селект */
+.auth-lang {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ======== MEDIA QUERIES (мобилки) ======== */
+
+@media (max-width: 768px) {
+    .burger {
+        display: flex;
+    }
+
+    .navButtons {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .navButtons.open {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .navButtons nav {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul li {
+        width: 100%;
+    }
+
+    nav ul li a {
+        width: 100%;
+        display: block;
+        padding: 10px 0;
+    }
+
+    .auth-lang {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav button, .lang-select {
+        width: 100%;
+    }
 }

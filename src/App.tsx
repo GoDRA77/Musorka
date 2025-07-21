@@ -6,7 +6,6 @@ import Category from "./category/Category.tsx";
 import Destinations from "./destinations/Destinations.tsx";
 import Book from "./Book/Book.tsx";
 import Testimonials from "./estimates/Estimates.tsx";
-import Sponsors from "./sponsors/Sponsors.tsx";
 import Sub from "./Sub/Sub.tsx";
 import Footer from "./Footer/Footer.tsx";
 
@@ -55,7 +54,7 @@ const App: React.FC = () => {
             <Destinations/>
             <Book/>
             <Testimonials/>
-            <Sponsors/>
+
             <Sub/>
             <Footer/>
         </div>
