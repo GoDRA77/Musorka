@@ -1,0 +1,36 @@
+.savedQuestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.questionCard {
+    background: #0a0a0a;
+    border: 1px solid #3B82F6;
+    padding: 10px;
+    border-radius: 10px;
+    width: 160px;
+}
+
+.questionCard img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.answers {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.answers button {
+    background: #1f1f1f;
+    color: #fff;
+    border: 1px solid #3B82F6;
+    border-radius: 6px;
+    padding: 5px 0;
+    cursor: pointer;
+    font-size: 14px;
+}

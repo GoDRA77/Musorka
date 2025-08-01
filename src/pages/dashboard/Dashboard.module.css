@@ -123,3 +123,23 @@ body {
   padding: 0;
   overflow-y: auto; /* только один скролл */
 }
+@media (max-width: 440px) {
+  .dashboard_content{
+    margin-left: 3rem !important;
+    padding: 5rem 4rem 1rem 2rem !important;
+  }
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  @media (max-width: 378px) {
+    .dashboard_content {
+      margin-left: 1rem !important;
+      padding: 5rem 4rem 1rem 2rem !important;
+    }
+  }
+}
