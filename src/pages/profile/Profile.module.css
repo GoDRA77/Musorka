@@ -4,19 +4,15 @@
     flex-direction: column;
     background: #181818;
     color: #fff;
-    justify-content: center;
     font-family: Montserrat, sans-serif;
 }
 
 .profileContent {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     gap: 30px;
-    padding: 30px;
     margin-left: 20rem !important;
     padding: 5rem 4rem 1rem 2rem !important;
-    width: 100%;
 }
 
 .profileCard {
@@ -120,6 +116,20 @@
     justify-content: center;
     margin-bottom: 20px;
 }
+.circle1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FACC45 0%, #E9C885 50%, #FACC45 100%);
+
+    color: #000;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
 /* --- NEW styles --- */
 .savedBlock {
@@ -139,7 +149,19 @@
     cursor: pointer;
     text-decoration: underline;
 }
-
+@media (max-width:768px ) {
+    .profileContent {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin-left: 2rem !important;
+        padding: 5rem 4rem 1rem 2rem !important;
+    }
+    .profileCard {
+        width: 100%;
+    }
+    
+}
 /* Responsive */
 @media (max-width: 768px) {
     .profileContent {

@@ -12,7 +12,7 @@ import StartSurvey from "../pages/startSurvey/startSurvey";
 import Exam from "../pages/Exam/Exam";
 import Exam2 from "../pages/Exam2/Exam2";
 import ProfileEdit from "../pages/profile/ProfileEdit/ProfileEdit.jsx";
-import FriendsPage from "../pages/friends/friendsPage";
+import FriendsPage from "../pages/friends/friendsPage.js";
 
 export const routers = createBrowserRouter([
   {

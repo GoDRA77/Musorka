@@ -3,51 +3,78 @@ import axios from "axios";
 import puzzle from "../../../src/assets/ProfilePage/aeb6822331b05ad81ba4159d5882c8f22c1f944c.png";
 import road from "../../../src/assets/ProfilePage/a37b6540a15cc9a83837aa85047de24e5fdb4b0d.png";
 import task from "../../../src/assets/ProfilePage/f948a2a10effbd66c81290e233e21741d3198a99.png";
+import star from "../../../src/assets/ProfilePage/Star 1 (1).png";
 import { useNavigate } from "react-router-dom";
 import style from "./Profile.module.css";
 import SavedQuestions from "./profile savedquestions/SavedQuestions.jsx";
 
 export default function Profile() {
   const navigate = useNavigate();
-
   const [profile, setProfile] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const mockData = {
-      name: "Рик Граймс Краш",
-      university: "AUCA",
-      bio: "Школьник, целеустремленный...",
-      avatar: "../../../src/assets/ProfilePage/6e1fdc17903c7bb070d9ad684dae08839e66881f.jpg",
-      interests: ["Математика", "Физика" ,"Математика", "Физика","Математика", "Физика"],
-      stats: {
-        solved: 1642,
-        correctRatio: "89 : 11%",
-        testsPassed: 124,
-        rating: 188,
-        score: 235
-      },
-      savedQuestions: [
-        { id: 1, image: "../../../src/assets/ProfilePage/Mask group.png", answers: ["A", "B", "C"] },
-        { id: 2, image: "../../../src/assets/ProfilePage/Mask group.png", answers: ["A", "B", "C"] },
-        { id: 3, image: "../../../src/assets/ProfilePage/Mask group.png", answers: ["A", "B", "C"] },
-        { id: 4, image: "../../../src/assets/ProfilePage/Mask group.png", answers: ["A", "B", "C"] },
-        { id: 5, image: "../../../src/assets/ProfilePage/Mask group.png", answers: ["A", "B", "C"] }
-      ]
-    };
+    axios
+        .get("https://ort-reels.onrender.com/user/me")
+        .then((res) => {
+          const data = res.data;
 
-    setProfile(mockData);
+          const solved = data.usedQuestions?.length || 0;
+
+          const correctAnswers = data.usedQuestions?.flatMap((q) =>
+              q.answers.filter((a) => a.correct)
+          ).length || 0;
+
+          const totalAnswers = data.usedQuestions?.reduce(
+              (acc, q) => acc + q.answers.length,
+              0
+          ) || 0;
+
+          const correctRatio =
+              totalAnswers > 0
+                  ? `${Math.round((correctAnswers / totalAnswers) * 100)} : ${
+                      100 - Math.round((correctAnswers / totalAnswers) * 100)
+                  }%`
+                  : "0 : 0%";
+
+          const formattedProfile = {
+            name: `${data.name} ${data.surname}`,
+            university: "AUCA", // заглушка
+            bio: "Школьник, целеустремленный...", // заглушка
+            avatar: data.avatar?.[0] || "https://i.pravatar.cc/150",
+            interests: data.interest || [],
+            stats: {
+              solved,
+              correctRatio,
+              testsPassed: 0,
+              rating: 0,
+              score: 0,
+            },
+            savedQuestions: data.savedQuestions?.map((q) => ({
+              id: q.id,
+              image: "https://via.placeholder.com/150", // заглушка
+              answers: q.answers.map((a) => a.answer),
+            })) || [],
+          };
+
+          setProfile(formattedProfile);
+        })
+        .catch((err) => {
+          console.error(err);
+          setError("Не удалось загрузить данные профиля.");
+        });
   }, []);
 
   const handleEdit = () => {
     navigate("/profile/edit");
   };
 
+  if (error) return <div>{error}</div>;
   if (!profile) return <div>Загрузка...</div>;
 
   return (
       <div className={style.profileContainer}>
         <div className={style.profileContent}>
-
           {/* Левая колонка */}
           <div className={style.profileCard}>
             <img src={profile.avatar} alt="avatar" className={style.avatar} />
@@ -76,17 +103,26 @@ export default function Profile() {
               <div className={style.card} style={{ background: "#FAD961" }}>
                 <img src={puzzle} alt="puzzle" />
                 <br />
-                <strong>{profile.stats.solved}</strong><br />Решённых вопросов
+                <strong>{profile.stats.solved}</strong>
+                <br />
+                Решённых вопросов
               </div>
-              <div className={style.card} style={{ background: "#0033cc", color: "#fff" }}>
+              <div
+                  className={style.card}
+                  style={{ background: "#0033cc", color: "#fff" }}
+              >
                 <img src={task} alt="ratio" />
                 <br />
-                <strong>{profile.stats.correctRatio}</strong><br />Соотношение ответов
+                <strong>{profile.stats.correctRatio}</strong>
+                <br />
+                Соотношение ответов
               </div>
               <div className={style.card} style={{ background: "#E08E79" }}>
                 <img src={road} alt="tests" />
                 <br />
-                <strong>{profile.stats.testsPassed}</strong><br />Пройденных тестов
+                <strong>{profile.stats.testsPassed}</strong>
+                <br />
+                Пройденных тестов
               </div>
             </div>
 
@@ -94,22 +130,14 @@ export default function Profile() {
             <div className={style.rating}>
               <div className={style.circle}>#{profile.stats.rating}</div>
               <div>Приблизительный балл пользователя:</div>
-              <img src="/your-star.png" alt="star" />
-              <br />
-              <strong>{profile.stats.score}</strong>
-            </div>
-
-            {/* Сохранённые вопросы */}
-            <div className={style.savedBlock}>
-              <div className={style.savedQuestionsHeader}>
-                <h3 className={style.sectionTitle}>Сохранённые вопросы</h3>
-                <span className={style.viewAll} onClick={() => navigate("/saved-questions")}>
-                Посмотреть все
-              </span>
+              <div className={style.circle1}>
+                <strong>{profile.stats.score}</strong>
               </div>
-              <SavedQuestions questions={profile.savedQuestions.slice(0, 4)} />
+              <br />
             </div>
 
+            {/* Сохранённые вопросы (если используешь компонент) */}
+            <SavedQuestions questions={profile.savedQuestions} />
           </div>
         </div>
       </div>
