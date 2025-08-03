@@ -1,98 +1,143 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import puzzle from "../../../src/assets/ProfilePage/aeb6822331b05ad81ba4159d5882c8f22c1f944c.png";
+import road from "../../../src/assets/ProfilePage/a37b6540a15cc9a83837aa85047de24e5fdb4b0d.png";
+import task from "../../../src/assets/ProfilePage/f948a2a10effbd66c81290e233e21741d3198a99.png";
 import { useNavigate } from "react-router-dom";
 import style from "./Profile.module.css";
 
 export default function Profile() {
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    axios
+        .get("https://ort-reels.onrender.com/user/me")
+        .then((res) => {
+          const data = res.data;
+
+          const solved = data.usedQuestions?.length || 0;
+
+          const correctAnswers = data.usedQuestions?.flatMap((q) =>
+              q.answers.filter((a) => a.correct)
+          ).length || 0;
+
+          const totalAnswers = data.usedQuestions?.reduce(
+              (acc, q) => acc + q.answers.length,
+              0
+          ) || 0;
+
+          const correctRatio =
+              totalAnswers > 0
+                  ? `${Math.round((correctAnswers / totalAnswers) * 100)} : ${
+                      100 - Math.round((correctAnswers / totalAnswers) * 100)
+                  }%`
+                  : "0 : 0%";
+
+          const formattedProfile = {
+            name: `${data.name} ${data.surname}`,
+            university: "AUCA", // заглушка
+            bio: "Школьник, целеустремленный...", // заглушка
+            avatar: data.avatar?.[0] || "https://i.pravatar.cc/150",
+            interests: data.interest || [],
+            stats: {
+              solved,
+              correctRatio,
+              testsPassed: 0,
+              rating: 0,
+              score: 0,
+            },
+            savedQuestions: data.savedQuestions?.map((q) => ({
+              id: q.id,
+              image: "https://via.placeholder.com/150", // заглушка
+              answers: q.answers.map((a) => a.answer),
+            })) || [],
+          };
+
+          setProfile(formattedProfile);
+        })
+        .catch((err) => {
+          console.error(err);
+          setError("Не удалось загрузить данные профиля.");
+        });
+  }, []);
 
   const handleEdit = () => {
     navigate("/profile/edit");
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  if (error) return <div>{error}</div>;
+  if (!profile) return <div>Загрузка...</div>;
 
   return (
-    <div className={style.profileContainer}>
-      <div className={style.profileContent}>
-        <div className={style.profileCard}>
-          <img
-            src="../../assets/ProfilePage/6e1fdc17903c7bb070d9ad684dae08839e66881f.jpg"
-            alt="avatar"
-            className={style.avatar}
-          />
-          <button onClick={logout}>Выйти</button>
+      <div className={style.profileContainer}>
+        <div className={style.profileContent}>
+          {/* Левая колонка */}
+          <div className={style.profileCard}>
+            <img src={profile.avatar} alt="avatar" className={style.avatar} />
+            <h2 className={style.name}>{profile.name}</h2>
+            <p className={style.university}>{profile.university}</p>
 
-          <h2 className={style.name}>Рик Граймс Краш</h2>
-          <p className={style.university}>
-            American University of Central Asia
-          </p>
-          <h3 className={style.sectionTitle}>Интересующие секции:</h3>
-          <ul className={style.interests}>
-            <li>Математика</li>
-            <li>Грамматика</li>
-            <li>Аналогии</li>
-            <li>Биология</li>
-          </ul>
-          <button className={style.editBtn} onClick={handleEdit}>
-            Редактировать
-          </button>
-        </div>
-        <div className={style.mainBlock}>
-          <h3 className={style.sectionTitle}>Информация о пользователе</h3>
-          <p>
-            Школьник, целеустремленный в подготовке к ОРТ. Интересуюсь
-            математикой и критическим мышлением, участвую в олимпиадах и помогаю
-            одноклассникам разбираться в сложных темах.
-          </p>
-          <h3 className={style.sectionTitle}>Статистика пользователя</h3>
-          <div className={style.stats}>
-            <div className={style.card} style={{ background: "#FAD961" }}>
-              <img
-                src="../../assets/ProfilePage/aeb6822331b05ad81ba4159d5882c8f22c1f944c.png"
-                alt="puzzle"
-              />
-              <br />
-              <strong>1642</strong>
-              <br />
-              Решённых вопросов
-            </div>
-            <div
-              className={style.card}
-              style={{ background: "#0033cc", color: "#ffffff" }}
-            >
-              <img
-                src="../../assets/ProfilePage/f948a2a10effbd66c81290e233e21741d3198a99.png"
-                alt="checkmark"
-              />
-              <br />
-              <strong>89 : 11%</strong>
-              <br />
-              Соотношение ответов
-            </div>
-            <div className={style.card} style={{ background: "#E08E79" }}>
-              <img
-                src="../../assets/ProfilePage/f948a2a10effbd66c81290e233e21741d3198a99.png"
-                alt="list"
-              />
-              <br />
-              <strong>124</strong>
-              <br />
-              Пройденных тестов
-            </div>
+            <h3 className={style.sectionTitle}>Интересующие секции:</h3>
+            <ul className={style.interests}>
+              {profile.interests.map((item, index) => (
+                  <li key={index}>{item}</li>
+              ))}
+            </ul>
+
+            <button className={style.editBtn} onClick={handleEdit}>
+              Редактировать
+            </button>
           </div>
-          <h3 className={style.sectionTitle}>Рейтинг пользователя</h3>
-          <div className={style.rating}>
-            <div className={style.circle}>#12</div>
-            <div>Приблизительный балл пользователя:</div>
-            <img src="/your-star.png" alt="star" />
-            <br />
-            <strong>235</strong>
+
+          {/* Правая часть */}
+          <div className={style.mainBlock}>
+            <h3 className={style.sectionTitle}>Информация о пользователе</h3>
+            <p>{profile.bio}</p>
+
+            <h3 className={style.sectionTitle}>Статистика пользователя</h3>
+            <div className={style.stats}>
+              <div className={style.card} style={{ background: "#FAD961" }}>
+                <img src={puzzle} alt="puzzle" />
+                <br />
+                <strong>{profile.stats.solved}</strong>
+                <br />
+                Решённых вопросов
+              </div>
+              <div
+                  className={style.card}
+                  style={{ background: "#0033cc", color: "#fff" }}
+              >
+                <img src={task} alt="ratio" />
+                <br />
+                <strong>{profile.stats.correctRatio}</strong>
+                <br />
+                Соотношение ответов
+              </div>
+              <div className={style.card} style={{ background: "#E08E79" }}>
+                <img src={road} alt="tests" />
+                <br />
+                <strong>{profile.stats.testsPassed}</strong>
+                <br />
+                Пройденных тестов
+              </div>
+            </div>
+
+            <h3 className={style.sectionTitle}>Рейтинг пользователя</h3>
+            <div className={style.rating}>
+              <div className={style.circle}>#{profile.stats.rating}</div>
+              <div>Приблизительный балл пользователя:</div>
+              <div className={style.circle1}>
+                <strong>{profile.stats.score}</strong>
+              </div>
+              <br />
+            </div>
+
+            {/* Сохранённые вопросы (если используешь компонент) */}
+            <SavedQuestions questions={profile.savedQuestions} />
           </div>
         </div>
       </div>
-    </div>
   );
 }
